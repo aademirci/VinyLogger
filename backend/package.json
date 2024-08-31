@@ -1,0 +1,19 @@
+{
+  "name": "greenfield-project",
+  "version": "1.0.0",
+  "description": "LP collection app",
+  "main": "server.js",
+  "scripts": {
+    "dev": "nodemon --env-file=.env server",
+    "start": "node --env-file=.env server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.19.2",
+    "mongoose": "^8.6.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
