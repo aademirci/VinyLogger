@@ -1,7 +1,14 @@
 const express = require("express")
-const db = require("./config/connection")
+const db = require('./config/connection')
+const cors = require('cors')
+
 const app = express()
 
-const port = process.env.PORT
+app.use(cors())
+app.use(express.json())
+app.use('/user', require('./routers/user'))
+app.use('/', require('./routers/album'))
 
-app.listen(port, () => console.log(`app is listening to port ${port}`))
+const port = 8080
+
+app.listen(port, () => console.log(`VinyLogger app listening on port ${port}`))

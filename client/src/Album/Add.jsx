@@ -1,10 +1,22 @@
+import axios from 'axios'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { useEffect } from 'react'
+import { useCookies } from 'react-cookie'
+import { useNavigate } from 'react-router-dom'
 
 const Add = () => {
+    const navigate = useNavigate()
+    const [cookies] = useCookies(['vinylogger'])
+    const headers = { Authorization: `Bearer ${cookies.vinylogger}` }
+
+    useEffect(() => {
+        if (!cookies.vinylogger) navigate('/')
+    }, [navigate, cookies])
+
     return (
         <div className="add-album">
             <Formik 
-                initialValues={{ place: 'collection', artist: '', title: '', year: '', genre: '' }}
+                initialValues={{ place: 'owned', artist: '', title: '', year: '', genre: '' }}
                 validate={values => {
                     const errors = {}
                     if (!values.artist) errors.artist = '* Required'
@@ -17,6 +29,15 @@ const Add = () => {
                 onSubmit={async (values, { setSubmitting }) => {
                     try {
                         setSubmitting(false)
+                        const { data } = await axios.post('http://localhost:8080/album/create', { ...values }, { headers })
+                        const { album, msg } = data
+
+                        if (album) {
+                            alert(msg)
+                            navigate(`/${values.place}`)
+                        } else {
+                            alert(msg)
+                        }
                     } catch (error) {
                         console.log(error)
                     }
@@ -26,8 +47,8 @@ const Add = () => {
                     <Form>
                         <span role='group' className='radio'>
                             <label>
-                                <Field type="radio" name="place" value="collection" />
-                                Collection
+                                <Field type="radio" name="place" value="owned" />
+                                Owned
                             </label>
                             <label>
                                 <Field type="radio" name="place" value="wishlist" />
@@ -47,7 +68,7 @@ const Add = () => {
                         <div>
                             <span className="year">
                                 <label htmlFor="year">Year:</label>
-                                <Field type="text" maxlength="4" name="year" />
+                                <Field type="text" maxLength="4" name="year" />
                             </span>
                             <span className="genre">
                                 <label htmlFor="genre">Genre:</label>

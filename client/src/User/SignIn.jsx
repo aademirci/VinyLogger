@@ -1,6 +1,13 @@
-import {ErrorMessage, Field, Form, Formik} from 'formik'
+/* eslint-disable no-unused-vars */
+import axios from 'axios'
+import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { useCookies } from 'react-cookie'
+import { useNavigate } from 'react-router-dom'
 
 const SignIn = () => {
+    const navigate = useNavigate()
+    const [cookies, setCookie] = useCookies(['vinylogger'])
+
     return (
         <div className="sign-in">
             <Formik
@@ -14,6 +21,16 @@ const SignIn = () => {
                 onSubmit={async (values, { setSubmitting }) => {
                     try {
                         setSubmitting(false)
+                        const { data } = await axios.post('http://localhost:8080/user/login', values)
+                            const { token, msg } = data
+                
+                            if (token) {
+                                alert(msg)
+                                setCookie('vinylogger', token, { path: '/' })
+                                navigate(`/`)
+                            } else {
+                                alert(msg)
+                            }
                     } catch (error) {
                         console.log(error)
                     }

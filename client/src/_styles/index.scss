@@ -13,7 +13,7 @@ h2 { font-variation-settings: "wght" 400; font-size: var(--margins); }
         ul { list-style: none; }
         li { margin-bottom: calc(var(--margins) / 4); }
         li, footer { padding: calc(var(--margins) / 4) calc(var(--margins) / 2); }
-        li:hover, footer:hover, .active { background: var(--light); border-radius: calc(var(--margins) / 2); }
+        li:hover, footer:hover, .active { background: var(--light); border-radius: calc(var(--margins) / 2); } 
     }
     main { padding: var(--margins); 
         &:has(.welcome, .sign-in, .sign-up, .add-album) { display: flex; align-items: center; flex-grow: 1; }
@@ -25,15 +25,16 @@ h2 { font-variation-settings: "wght" 400; font-size: var(--margins); }
 }
 .menu { font-variation-settings: "wght" 300; font-size: var(--margins); position: absolute; top: calc(var(--margins) * 3 - calc(var(--margins) / 2)); right: calc(var(--margins) / (-1)); padding: calc(var(--margins) / 2); background-color: var(--accent); border-radius: calc(var(--margins) / 2);
     a { text-decoration: none; display: block; }
+    span { cursor: pointer; display: block; }
 }
 .call-to-sign { font-size: calc(var(--margins) / 2); text-align: right; width: calc(var(--margins) * 3); }
 
-.welcome { display: flex; flex-direction: column; align-items: center; 
+.welcome { display: flex; flex-direction: column; align-items: center; width: 100%;
     img { display: block; margin-bottom: var(--margins); } 
     p { font-size: calc(var(--margins) * 2); text-align: center; }
 }
 
-.collection .album-move { display: none; }
+.owned .album-move { display: none; }
 .album-collection { list-style: none; display: flex; flex-wrap: wrap; column-gap: var(--margins); row-gap: calc(var(--margins) - 24px); margin-bottom: var(--margins);}
 .album { width: calc(var(--margins) * 8); position: relative; 
     &:hover .album-control { display: block; }

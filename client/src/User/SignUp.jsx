@@ -1,6 +1,10 @@
+import axios from 'axios'
 import { ErrorMessage, Field, Form, Formik } from 'formik'
+import { useNavigate } from 'react-router-dom'
 
 const SignUp = () => {
+    const navigate = useNavigate()
+
     return (
         <div className="sign-up">
             <Formik
@@ -16,6 +20,16 @@ const SignUp = () => {
                 onSubmit={async (values, { setSubmitting }) => {
                     try {
                         setSubmitting(false)
+                        const { data } = await axios.post('http://localhost:8080/user/register', { ...values })
+                
+                        const { newUser, msg } = data
+                
+                        if (newUser) {
+                            alert(msg)
+                            navigate('/')
+                        } else {
+                            alert(msg)
+                        }
                     } catch (error) {
                         console.log(error)
                     }
